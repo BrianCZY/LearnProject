@@ -7,9 +7,10 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
-import android.view.Menu
-import android.view.MenuItem
-import com.example.learnproject.designmode.*
+import com.example.learnproject.designmode.builder.DailyReportBuilder
+import com.example.learnproject.designmode.builder.Director
+import com.example.learnproject.designmode.builder.MonthReportBuilder
+import com.example.learnproject.designmode.singleton.*
 import com.example.learnproject.ui.main.SectionsPagerAdapter
 
 class MainActivity : AppCompatActivity() {
@@ -31,11 +32,24 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-        testDesignMode()
+        testSingletonDesignMode()
+        testBuilderDesignMode()
 
     }
 
-    private fun testDesignMode() {
+    private fun testBuilderDesignMode() {
+        val dailyReportBuilder = DailyReportBuilder()
+        Director(dailyReportBuilder).construct("2020-8-2", "学习建造者模式！")
+        val dailyReport = dailyReportBuilder.create()
+        Log.i(TAG, "DailyReportBuilder :\n ${dailyReport.buildReport()}")
+
+        val monthReportBuilder = MonthReportBuilder()
+        Director(monthReportBuilder).construct("2020-8-2", "学习设计模式！")
+        val monthReport = monthReportBuilder.create()
+        Log.i(TAG, "MonthReportBuilder :\n ${monthReport.buildReport()}")
+    }
+
+    private fun testSingletonDesignMode() {
         //饿汉
         SingletonHungry.getInstance().init()
         SingletonHungryKotlin.init()

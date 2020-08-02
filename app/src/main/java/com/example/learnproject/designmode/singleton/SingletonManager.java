@@ -1,4 +1,4 @@
-package com.example.learnproject.designmode;
+package com.example.learnproject.designmode.singleton;
 
 import java.util.HashMap;
 import java.util.Map;

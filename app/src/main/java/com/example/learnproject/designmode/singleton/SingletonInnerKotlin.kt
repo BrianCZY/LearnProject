@@ -1,4 +1,4 @@
-package com.example.learnproject.designmode
+package com.example.learnproject.designmode.singleton
 
 /**
  * @author: brian
@@ -11,7 +11,8 @@ class SingletonInnerKotlin {
 
 
     private object SingletonHolder {
-        val instance = SingletonInnerKotlin()
+        val instance =
+            SingletonInnerKotlin()
     }
 
     fun init() {
@@ -19,6 +20,7 @@ class SingletonInnerKotlin {
     }
 
     companion object {
-        val instance = SingletonHolder.instance
+        val instance =
+            SingletonHolder.instance
     }
 }

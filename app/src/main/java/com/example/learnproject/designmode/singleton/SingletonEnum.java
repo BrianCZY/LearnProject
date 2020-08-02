@@ -1,4 +1,4 @@
-package com.example.learnproject.designmode;
+package com.example.learnproject.designmode.singleton;
 
 /**
  * @author: brian
