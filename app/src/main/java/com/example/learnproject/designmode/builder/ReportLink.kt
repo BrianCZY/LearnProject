@@ -1,5 +1,10 @@
 package com.example.learnproject.designmode.builder
 
+import android.os.Build
+import androidx.annotation.RequiresApi
+import com.example.learnproject.util.toStringField
+import java.util.*
+
 /**
  * @author: brian
  * @date: 2020/8/8 11:25
@@ -21,9 +26,13 @@ class ReportLink {
     var mSubmitDate: String? = null //提交日期
     var mPerson: String? = null //提交人
 
+/*    @RequiresApi(Build.VERSION_CODES.KITKAT)
     override fun toString(): String {
         return "mTile:$mTile \n mDay:$mDay \n  mContent:$mContent \n mNextPlan:$mNextPlan \n  mSubmitDate:$mSubmitDate \n  mPerson:$mPerson "
-    }
+
+        this.toStringField()
+
+    }*/
 
     class Builder {
         var mTile: String? = null //报告标题

@@ -8,7 +8,7 @@ android {
 
     defaultConfig {
         applicationId "com.example.learnproject"
-        minSdkVersion 16
+        minSdkVersion 23  //23 6.0
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"

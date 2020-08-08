@@ -1,7 +1,9 @@
 package com.example.learnproject
 
+import android.os.Build
 import android.os.Bundle
 import android.util.Log
+import androidx.annotation.RequiresApi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
@@ -13,6 +15,8 @@ import com.example.learnproject.designmode.builder.MonthReportBuilder
 import com.example.learnproject.designmode.builder.ReportLink
 import com.example.learnproject.designmode.singleton.*
 import com.example.learnproject.ui.main.SectionsPagerAdapter
+import com.example.learnproject.util.toStringField
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
 
@@ -61,7 +65,12 @@ class MainActivity : AppCompatActivity() {
             .builderPerson("Brian")
             .create()
 
-        Log.i(TAG, "testBuilderDesignMode  reportLink:\n ${reportLink.toString()} ")
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            Log.i(
+                TAG,
+                "testBuilderDesignMode  reportLink:\n ${reportLink.toStringField()} "
+            )
+        }
 
 
     }
