@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.learnproject.designmode.builder.DailyReportBuilder
 import com.example.learnproject.designmode.builder.Director
 import com.example.learnproject.designmode.builder.MonthReportBuilder
+import com.example.learnproject.designmode.builder.ReportLink
 import com.example.learnproject.designmode.singleton.*
 import com.example.learnproject.ui.main.SectionsPagerAdapter
 
@@ -38,15 +39,31 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun testBuilderDesignMode() {
+
+        //Builder模式 （建造者） 经典形式
         val dailyReportBuilder = DailyReportBuilder()
         Director(dailyReportBuilder).construct("2020-8-2", "学习建造者模式！")
         val dailyReport = dailyReportBuilder.create()
-        Log.i(TAG, "DailyReportBuilder :\n ${dailyReport.buildReport()}")
+        Log.i(TAG, "testBuilderDesignMode DailyReportBuilder :\n ${dailyReport.buildReport()}")
 
         val monthReportBuilder = MonthReportBuilder()
         Director(monthReportBuilder).construct("2020-8-2", "学习设计模式！")
         val monthReport = monthReportBuilder.create()
-        Log.i(TAG, "MonthReportBuilder :\n ${monthReport.buildReport()}")
+        Log.i(TAG, "testBuilderDesignMode MonthReportBuilder :\n ${monthReport.buildReport()}")
+
+        //Buider模式  链式调用
+        val reportLink = ReportLink.Builder()
+            .builderTile("开发日志")
+            .builderContent("2020-8-8 学习了建造者的链式调用，学习进度延迟！")
+            .builderDay("2020-8-8")
+            .builderNextPlan("接下来学习原型模式")
+//            .buildersubmitDate("2020-8-8") //这里可以设置也可以不设置，内部有默认的，这是Builder模式的优点
+            .builderPerson("Brian")
+            .create()
+
+        Log.i(TAG, "testBuilderDesignMode  reportLink:\n ${reportLink.toString()} ")
+
+
     }
 
     private fun testSingletonDesignMode() {
