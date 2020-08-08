@@ -36,13 +36,19 @@ class MainActivity : AppCompatActivity() {
         fab.setOnClickListener { view ->
             Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
                 .setAction("Action", null).show()
+
+            test()
         }
 
+
+
+    }
+
+    private fun test() {
         testToString()
 
         testSingletonDesignMode()
         testBuilderDesignMode()
-
     }
 
     private fun testToString() {
@@ -56,24 +62,24 @@ class MainActivity : AppCompatActivity() {
         val doubleType = 100.001.toDouble()
         val LongType = 100000.toDouble()
         val charType: Char = 'c'
-        val reportLinkType = ReportLink.Builder()
+        val reportLink = ReportLink.Builder()
             .builderTile("开发日志")
             .builderContent("2020-8-8 学习了建造者的链式调用，学习进度延迟！")
             .builderDay("2020-8-8")
             .builderNextPlan("接下来学习原型模式")
 //            .buildersubmitDate("2020-8-8") //这里可以设置也可以不设置，内部有默认的，这是Builder模式的优点
             .builderPerson("Brian")
-            .create().anyToString()
-        Log.i(TAG, "testToString intType : ${intType.anyToString()}")
-        Log.i(TAG, "testToString booleanType : ${stringType.anyToString()}")
-        Log.i(TAG, "testToString booleanType : ${booleanType.anyToString()}")
-        Log.i(TAG, "testToString floatType : ${floatType.anyToString()}")
-        Log.i(TAG, "testToString shortType : ${shortType.anyToString()}")
-        Log.i(TAG, "testToString byteType : ${byteType.anyToString()}")
-        Log.i(TAG, "testToString doubleType : ${doubleType.anyToString()}")
-        Log.i(TAG, "testToString LongType : ${LongType.anyToString()}")
-        Log.i(TAG, "testToString charType : ${charType.anyToString()}")
-        Log.i(TAG, "testToString reportLinkType : ${reportLinkType.anyToString()}")
+            .create()
+//        Log.i(TAG, "testToString intType : ${intType.anyToString()}")
+//        Log.i(TAG, "testToString booleanType : ${stringType.anyToString()}")
+//        Log.i(TAG, "testToString booleanType : ${booleanType.anyToString()}")
+//        Log.i(TAG, "testToString floatType : ${floatType.anyToString()}")
+//        Log.i(TAG, "testToString shortType : ${shortType.anyToString()}")
+//        Log.i(TAG, "testToString byteType : ${byteType.anyToString()}")
+//        Log.i(TAG, "testToString doubleType : ${doubleType.anyToString()}")
+//        Log.i(TAG, "testToString LongType : ${LongType.anyToString()}")
+//        Log.i(TAG, "testToString charType : ${charType.anyToString()}")
+//        Log.i(TAG, "testToString reportLink : ${reportLink.anyToString()}")
 
         val yearReport: YearReport = YearReport()
         val reports = mutableListOf<ReportLink>()
@@ -100,7 +106,7 @@ class MainActivity : AppCompatActivity() {
         yearReport.reports.addAll(reports)
         yearReport.reportSum = reports.size
 //        val mixType = yearReport.anyToString()
-        Log.i(TAG, "testToString mixType : ${yearReport.anyToString()}")
+        Log.i(TAG, "testToString mixType yearReport : ${yearReport.anyToString()}")
     }
 
     private fun testBuilderDesignMode() {

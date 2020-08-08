@@ -1,11 +1,7 @@
 package com.example.learnproject.util
 
-import android.os.Build
-import androidx.annotation.RequiresApi
-import com.example.learnproject.designmode.singleton.SingletonHungryKotlin.name
-import java.lang.StringBuilder
 import java.lang.reflect.Array
-import java.util.*
+
 
 /**
  * @author: brian
@@ -59,16 +55,28 @@ fun Any.anyToString(): String {
     ) { // 基本类型
         stringBuilder.append("$this ")
 
-    } else if (this is Array) {//数组
+    } else if (objClass.isArray) {//数组
         stringBuilder.append("[")
         val length = Array.getLength(this)
         for (i in 0..length - 1) {
-            val obj = Array.get(this, i)
+            try {
+                val obj = Array.get(this, i)
 //            obj.anyToString()
-            stringBuilder.append(obj.anyToString())
-            if (i < length - 1) {
-                stringBuilder.append(",")
+                if (obj == null) {
+//                    stringBuilder.append("")
+                } else {
+                    if (i > 0) {
+                        stringBuilder.append(",")
+                    }
+                    stringBuilder.append(obj.anyToString())
+
+                }
+
+            } catch (e: IllegalStateException) {
+                e.printStackTrace()
             }
+
+
         }
 
         stringBuilder.append("]")
@@ -78,11 +86,16 @@ fun Any.anyToString(): String {
         stringBuilder.append("{\n")
         objClass.declaredFields.forEachIndexed { index, field ->
             field.isAccessible = true
-            val value = field.get(this).toString()
-            stringBuilder.append("${field.name} : ${value.anyToString()}")
-            if (index < objClass.declaredFields.size - 1) {
+            val value = field.get(this)
+            if (index > 0) {
                 stringBuilder.append(",\n")
             }
+            if (field.type.isPrimitive || field.type == String.javaClass) {
+                stringBuilder.append("${field.name} : ${value}")
+            } else {
+                stringBuilder.append("${field.name} : ${value.anyToString()}")
+            }
+
 
         }
 
