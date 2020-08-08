@@ -1,5 +1,8 @@
 package com.example.learnproject.designmode.builder
 
+import com.example.learnproject.bean.MonthReport
+import com.example.learnproject.bean.Report
+
 /**
  * @author: brian
  * @date: 2020/8/2 16:31

@@ -1,4 +1,4 @@
-package com.example.learnproject.designmode.builder
+package com.example.learnproject.bean
 
 /**
  * @author: brian

@@ -9,14 +9,16 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
+import com.example.learnproject.bean.Company
+import com.example.learnproject.bean.YearReport
 import com.example.learnproject.designmode.builder.DailyReportBuilder
 import com.example.learnproject.designmode.builder.Director
 import com.example.learnproject.designmode.builder.MonthReportBuilder
 import com.example.learnproject.designmode.builder.ReportLink
 import com.example.learnproject.designmode.singleton.*
 import com.example.learnproject.ui.main.SectionsPagerAdapter
-import com.example.learnproject.util.toStringField
-import java.util.*
+import com.example.learnproject.util.anyToString
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -36,10 +38,69 @@ class MainActivity : AppCompatActivity() {
                 .setAction("Action", null).show()
         }
 
+        testToString()
 
         testSingletonDesignMode()
         testBuilderDesignMode()
 
+    }
+
+    private fun testToString() {
+        //测试通用的toString 方法
+        val intType = 2020
+        val stringType = "stringType"
+        val booleanType = true
+        val floatType = 88f
+        val shortType: Short = 8
+        val byteType = 8.toByte()
+        val doubleType = 100.001.toDouble()
+        val LongType = 100000.toDouble()
+        val charType: Char = 'c'
+        val reportLinkType = ReportLink.Builder()
+            .builderTile("开发日志")
+            .builderContent("2020-8-8 学习了建造者的链式调用，学习进度延迟！")
+            .builderDay("2020-8-8")
+            .builderNextPlan("接下来学习原型模式")
+//            .buildersubmitDate("2020-8-8") //这里可以设置也可以不设置，内部有默认的，这是Builder模式的优点
+            .builderPerson("Brian")
+            .create().anyToString()
+        Log.i(TAG, "testToString intType : ${intType.anyToString()}")
+        Log.i(TAG, "testToString booleanType : ${stringType.anyToString()}")
+        Log.i(TAG, "testToString booleanType : ${booleanType.anyToString()}")
+        Log.i(TAG, "testToString floatType : ${floatType.anyToString()}")
+        Log.i(TAG, "testToString shortType : ${shortType.anyToString()}")
+        Log.i(TAG, "testToString byteType : ${byteType.anyToString()}")
+        Log.i(TAG, "testToString doubleType : ${doubleType.anyToString()}")
+        Log.i(TAG, "testToString LongType : ${LongType.anyToString()}")
+        Log.i(TAG, "testToString charType : ${charType.anyToString()}")
+        Log.i(TAG, "testToString reportLinkType : ${reportLinkType.anyToString()}")
+
+        val yearReport: YearReport = YearReport()
+        val reports = mutableListOf<ReportLink>()
+        reports.add(
+            ReportLink.Builder()
+                .builderTile("开发日志1")
+                .builderContent("测试ToString1！")
+                .builderDay("2020-8-8")
+                .builderNextPlan("接下来学习原型模式")
+                .builderPerson("Brian")
+                .create()
+        )
+        reports.add(
+            ReportLink.Builder()
+                .builderTile("开发日志2")
+                .builderContent("测试ToString2！")
+                .builderDay("2020-8-8")
+                .builderNextPlan("接下来学习原型模式")
+                .builderPerson("Brian")
+                .create()
+        )
+        yearReport.company = Company("Brian测试工程", "广州")
+        yearReport.year = "2020-8-8"
+        yearReport.reports.addAll(reports)
+        yearReport.reportSum = reports.size
+//        val mixType = yearReport.anyToString()
+        Log.i(TAG, "testToString mixType : ${yearReport.anyToString()}")
     }
 
     private fun testBuilderDesignMode() {
@@ -65,12 +126,11 @@ class MainActivity : AppCompatActivity() {
             .builderPerson("Brian")
             .create()
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Log.i(
-                TAG,
-                "testBuilderDesignMode  reportLink:\n ${reportLink.toStringField()} "
-            )
-        }
+
+        Log.i(
+            TAG,
+            "testBuilderDesignMode  reportLink:\n ${reportLink.anyToString()} "
+        )
 
 
     }

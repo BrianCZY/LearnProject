@@ -1,6 +1,4 @@
-package com.example.learnproject.designmode.builder
-
-import android.util.Log
+package com.example.learnproject.bean
 
 /**
  * @author: brian
