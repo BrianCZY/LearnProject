@@ -1,6 +1,7 @@
 package com.example.learnproject.util
 
 import java.lang.reflect.Array
+import java.lang.reflect.Modifier
 
 
 /**
@@ -43,63 +44,74 @@ fun Objects.toStringField(): String {
 }*/
 
 
+/**
+ *
+ * 将所有类型的数据转换为 String  ,类似GSON
+ * 技术方式：反射
+ */
 fun Any.anyToString(): String {
     val objClass: Class<*> = this.javaClass
     val stringBuilder = StringBuilder()
     /**
      * 对于基本数据类型和String直接返回
      */
-    if (this is Int || this is Int || this is Byte
-        || this is Long || this is Double || this is Float
-        || this is Boolean || this is String || this is Char
-    ) { // 基本类型
-        stringBuilder.append("$this ")
 
-    } else if (objClass.isArray) {//数组
-        stringBuilder.append("[")
-        val length = Array.getLength(this)
-        for (i in 0..length - 1) {
-            try {
-                val obj = Array.get(this, i)
+    objClass.isArray
+    when {
+        this is Int || this is Int || this is Byte || this is Long || this is Double || this is Float || this is Boolean || this is String || this is Char -> { // 基本类型
+            stringBuilder.append("\"$this\"")
+
+        }
+        objClass.isArray -> {//数组
+            stringBuilder.append("[")
+            val length = Array.getLength(this)
+            for (i in 0..length - 1) {
+                try {
+                    val obj = Array.get(this, i)
 //            obj.anyToString()
-                if (obj == null) {
+                    if (obj == null) {
 //                    stringBuilder.append("")
-                } else {
-                    if (i > 0) {
-                        stringBuilder.append(",")
-                    }
-                    stringBuilder.append(obj.anyToString())
+                    } else {
+                        if (i > 0) {
+                            stringBuilder.append(",")
+                        }
+                        stringBuilder.append(obj.anyToString())
 
+                    }
+
+                } catch (e: IllegalStateException) {
+                    e.printStackTrace()
                 }
 
-            } catch (e: IllegalStateException) {
-                e.printStackTrace()
+
             }
+
+            stringBuilder.append("]")
 
 
         }
+        else -> {  //对象
+            stringBuilder.append("{")
+            objClass.declaredFields.forEachIndexed { index, field ->
+                field.isAccessible = true
+                val value = field.get(this)
+                if (index > 0) {
+                    stringBuilder.append(",")
+                }
+                if (!Modifier.isStatic(field.modifiers)) {
+                    //包含数组的实体类存在 size serialVersionUID，所以需要剔除掉
+                    if (field.type.isPrimitive || field.type == String.javaClass) {
+                        stringBuilder.append("\"${field.name}\" : \"${value}\"")
+                    } else {
+                        stringBuilder.append("\"${field.name}\" : ${value.anyToString()}")
+                    }
+                }
 
-        stringBuilder.append("]")
 
-
-    } else {  //对象
-        stringBuilder.append("{\n")
-        objClass.declaredFields.forEachIndexed { index, field ->
-            field.isAccessible = true
-            val value = field.get(this)
-            if (index > 0) {
-                stringBuilder.append(",\n")
             }
-            if (field.type.isPrimitive || field.type == String.javaClass) {
-                stringBuilder.append("${field.name} : ${value}")
-            } else {
-                stringBuilder.append("${field.name} : ${value.anyToString()}")
-            }
 
-
+            stringBuilder.append("}")
         }
-
-        stringBuilder.append("\n}")
     }
 
 

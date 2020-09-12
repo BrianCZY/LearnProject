@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         yearReport.reportSum = reports.size
 //        val mixType = yearReport.anyToString()
         Log.i(TAG, "testToString mixType yearReport : ${yearReport.anyToString()}")
+
     }
 
     private fun testBuilderDesignMode() {
