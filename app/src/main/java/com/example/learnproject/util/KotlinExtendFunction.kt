@@ -57,43 +57,30 @@ fun Any.anyToString(): String {
     /**
      * 对于基本数据类型和String直接返回
      */
-
-    objClass.isArray
-    //TODO 优化方向：判断Collection  (List,Set,Queue)  Map(HashMap,TreeMap 等)
     when { //
         this is Int || this is Short || this is Byte || this is Long || this is Double || this is Float
                 || this is Boolean || this is String || this is Char -> { // 基本类型
             stringBuilder.append("\"$this\"")
 
         }
-
         objClass.isArray -> {//数组
             stringBuilder.append("[")
             val length = Array.getLength(this)
             for (i in 0..length - 1) {
                 try {
                     val obj = Array.get(this, i)
-//            obj.anyToString()
                     if (obj == null) {
-//                    stringBuilder.append("")
                     } else {
                         if (i > 0) {
                             stringBuilder.append(",")
                         }
                         stringBuilder.append(obj.anyToString())
-
                     }
-
                 } catch (e: IllegalStateException) {
                     e.printStackTrace()
                 }
-
-
             }
-
             stringBuilder.append("]")
-
-
         }
         else -> {  //对象
             stringBuilder.append("{")
@@ -110,8 +97,12 @@ fun Any.anyToString(): String {
                         field.type.isPrimitive || field.type == String.javaClass -> {
                             stringBuilder.append("\"${field.name}\" : \"${value}\"")
                         }
-                        field.type == List::class.java->{  //List 集合
-                            stringBuilder.append("\"${field.name}\" : ${value.anyToString()}")
+                        field.type == List::class.java -> {  //List 集合 //TODO 优化方向：判断Collection  (List,Set,Queue)  Map(HashMap,TreeMap 等)
+//                            val fieldList = value.javaClass.declaredFields
+                            val elementDataField = value.javaClass.getDeclaredField("elementData")
+                            elementDataField.isAccessible = true
+                            val elementData = elementDataField.get(value)
+                            stringBuilder.append("\"${field.name}\" : ${elementData.anyToString()}")
                         }
                         else -> {
                             stringBuilder.append("\"${field.name}\" : ${value.anyToString()}")
