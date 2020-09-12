@@ -20,6 +20,7 @@ import com.example.learnproject.ui.main.SectionsPagerAdapter
 import com.example.learnproject.util.anyToString
 
 
+
 class MainActivity : AppCompatActivity() {
 
     private val TAG = MainActivity::class.java.simpleName
@@ -39,7 +40,6 @@ class MainActivity : AppCompatActivity() {
 
             test()
         }
-
 
 
     }
@@ -107,6 +107,7 @@ class MainActivity : AppCompatActivity() {
         yearReport.reportSum = reports.size
 //        val mixType = yearReport.anyToString()
         Log.i(TAG, "testToString mixType yearReport : ${yearReport.anyToString()}")
+
 
     }
 
