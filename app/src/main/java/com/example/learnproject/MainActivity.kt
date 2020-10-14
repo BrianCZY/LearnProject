@@ -1,15 +1,14 @@
 package com.example.learnproject
 
-import android.os.Build
 import android.os.Bundle
 import android.util.Log
-import androidx.annotation.RequiresApi
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.google.android.material.snackbar.Snackbar
 import com.google.android.material.tabs.TabLayout
 import androidx.viewpager.widget.ViewPager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.learnproject.bean.Company
+import com.example.learnproject.designmode.prototype.Product
 import com.example.learnproject.bean.YearReport
 import com.example.learnproject.designmode.builder.DailyReportBuilder
 import com.example.learnproject.designmode.builder.Director
@@ -18,7 +17,6 @@ import com.example.learnproject.designmode.builder.ReportLink
 import com.example.learnproject.designmode.singleton.*
 import com.example.learnproject.ui.main.SectionsPagerAdapter
 import com.example.learnproject.util.anyToString
-
 
 
 class MainActivity : AppCompatActivity() {
@@ -49,6 +47,24 @@ class MainActivity : AppCompatActivity() {
 
         testSingletonDesignMode()
         testBuilderDesignMode()
+        testPrototypeMode()
+    }
+
+    private fun testPrototypeMode() {
+        //测试 原型模式
+        Log.i(TAG, "testPrototypeMode  浅拷贝方案---")
+        var product = Product()
+        product.name = "手机"
+        product.price = "5000"
+        product.producer = "华为"
+        Log.i(TAG, "testPrototypeMode  product:${product.anyToString()}")
+        var product2 = product.clone()  //浅拷贝
+        product2.price = "4999"
+        Log.i(TAG, "testPrototypeMode  product:${product.anyToString()}")
+        Log.i(TAG, "testPrototypeMode  product2:${product2.anyToString()}")
+
+        Log.i(TAG, "testPrototypeMode  深拷贝方案---")
+
     }
 
     private fun testToString() {
